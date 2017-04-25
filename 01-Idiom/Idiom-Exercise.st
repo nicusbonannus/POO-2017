@@ -70,6 +70,22 @@ test04CanNotRemoveAndInvalidCustomer
 	self checkThat: aGivenOperation   throws: expectedErrorType  andAsserts: expectedCondition! !
 
 
+!IdiomTest methodsFor: 'Private' stamp: 'NB 4/25/2017 14:57:55'!
+checkThat: anOperation takesLessThan: amountOfMilliseconds	
+	| millisecondsBeforeRunning millisecondsAfterRunning |	
+	millisecondsBeforeRunning := Time millisecondClockValue.
+	anOperation value.
+	millisecondsAfterRunning := Time millisecondClockValue.
+
+	self assert: (millisecondsAfterRunning-millisecondsBeforeRunning) < amountOfMilliseconds.! !
+
+!IdiomTest methodsFor: 'Private' stamp: 'NB 4/25/2017 14:58:29'!
+checkThat: anOperation throws: anErrorType andAsserts: someConditions
+	[ anOperation value.
+	self fail ]
+		on: anErrorType 
+		do: someConditions ! !
+
 
 !classDefinition: #CustomerBook category: #'Idiom-Exercise'!
 Object subclass: #CustomerBook
