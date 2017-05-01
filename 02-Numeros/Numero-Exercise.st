@@ -298,10 +298,9 @@ initalizeWith: aValue
 	^anAdder addEntero: self
 ! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 23:14'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'sa 5/1/2017 14:50:23'!
 / aDivisor 
-	
-	^Fraccion with: self over: aDivisor! !
+	^aDivisor divideEntero: self! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 21:55'!
 // aDivisor 
@@ -319,6 +318,25 @@ addFraccion: aFraccion
 	numerator := self class with: ((aFraccion denominator integerValue * self integerValue ) + aFraccion numerator integerValue).
 	denominator := self class with: aFraccion denominator integerValue.
 	^numerator / denominator ! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'sa 5/1/2017 16:08:14'!
+canNotDivideByZeroErrorDescription 
+	
+	^'No se puede dividir por cero' 
+	! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'sa 5/1/2017 16:06:14'!
+divideEntero: aDivisor	
+	self isZero ifTrue: [ self error: self canNotDivideByZeroErrorDescription].
+	
+	^Fraccion with: aDivisor over: self! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'sa 5/1/2017 15:52:36'!
+divideFraccion: aDivisor
+	|newFraccion unoEntero|	self isZero ifTrue: [ self error: self canNotDivideByZeroErrorDescription ].
+	unoEntero := Entero with: 1.
+	newFraccion := Fraccion with: unoEntero over: self.
+	^ newFraccion multiplyFraccion: aDivisor! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 21:00'!
 greatestCommonDivisorWith: anEntero 
@@ -400,10 +418,10 @@ hash
 + anAdder 
 	^anAdder addFraccion: self! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 23:14'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'sa 5/1/2017 14:14:22'!
 / aDivisor 
 	
-	^(numerator * aDivisor denominator) / (denominator * aDivisor numerator)! !
+	^aDivisor divideFraccion: self! !
 
 !Fraccion methodsFor: 'arithmetic operations' stamp: 'NB 4/27/2017 19:40:50'!
 addEntero: anAdder
@@ -420,6 +438,19 @@ addFraccion: aFraccion
 	newDenominator := denominator * aFraccion denominator.
 	
 	^newNumerator / newDenominator! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'sa 5/1/2017 15:01:32'!
+divideEntero: aDivisor
+	|newFraccion|
+	newFraccion := Fraccion with: self denominator over: self numerator.
+	^aDivisor multiplyFraccion: newFraccion 
+! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'sa 5/1/2017 15:09:01'!
+divideFraccion: aDivisor
+	|newFraccion|
+	newFraccion := Fraccion with: self denominator  over: self numerator.
+	^newFraccion multiplyFraccion: aDivisor! !
 
 !Fraccion methodsFor: 'arithmetic operations' stamp: 'NB 4/29/2017 15:20:30'!
 multiplyEntero: anEntero
