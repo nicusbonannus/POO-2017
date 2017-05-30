@@ -204,6 +204,12 @@ test35GenerateARangeFromOneMeterToTwoMetersbyTenCentimetersAndDoSomething
 	distanceFactory oneMeter to: (3 Metros) by: (10 Centimetros) do: [:aNumber| range add: aNumber ].
 	self assert: range size = 21! !
 
+!DistancesTests methodsFor: 'as yet unclassified' stamp: 'SA 5/30/2017 17:19:04'!
+test36GenerateARangeFromOneMeterToTenMeters
+	|range|
+	range := distanceFactory oneMeter to: (distanceFactory tenMeters) .
+	self assert: range size = 10! !
+
 
 !classDefinition: #DistanceFactory category: #'Distance-Solution'!
 Object subclass: #DistanceFactory
@@ -282,9 +288,9 @@ length
 length: aLength 
 	length := aLength! !
 
-!Longitude methodsFor: 'accessing' stamp: 'NB 5/25/2017 18:02:53'!
+!Longitude methodsFor: 'accessing' stamp: 'SA 5/30/2017 17:26:49'!
 to: aLongitude 
-	^ self length to: aLongitude length by: 1! !
+	^ self length to: aLongitude length by: self length! !
 
 !Longitude methodsFor: 'accessing' stamp: 'NB 5/25/2017 18:42:00'!
 to: aLongitude by: aStep 
