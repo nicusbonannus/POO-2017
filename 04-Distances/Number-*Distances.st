@@ -12,3 +12,7 @@ Kilometros
 !Number methodsFor: '*Distances' stamp: 'NB 5/25/2017 18:17:38'!
 Metros
 	^Longitude withLength: self * 1000! !
+	
+!Number methodsFor: '*Distances' stamp: 'NB 5/25/2017 18:17:38'!
+Milimetros
+	^Longitude withLength: self! !
