@@ -1,9 +1,49 @@
+'From Cuis 5.0 of 7 November 2016 [latest update: #3076] on 30 May 2017 at 7:00:38 pm'!
+'Description Please enter a description for this package'!
+!provides: 'Distance-Solution' 1 0!
+!requires: 'Cuis-Base' 50 3076 nil!
 !classDefinition: #DistancesTests category: #'Distance-Solution'!
 TestCase subclass: #DistancesTests
 	instanceVariableNames: 'distanceFactory'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Distance-Solution'!
+!classDefinition: 'DistancesTests class' category: #'Distance-Solution'!
+DistancesTests class
+	instanceVariableNames: ''!
+
+!classDefinition: #DistanceFactory category: #'Distance-Solution'!
+Object subclass: #DistanceFactory
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Distance-Solution'!
+!classDefinition: 'DistanceFactory class' category: #'Distance-Solution'!
+DistanceFactory class
+	instanceVariableNames: ''!
+
+!classDefinition: #Longitude category: #'Distance-Solution'!
+Object subclass: #Longitude
+	instanceVariableNames: 'length unit'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Distance-Solution'!
+!classDefinition: 'Longitude class' category: #'Distance-Solution'!
+Longitude class
+	instanceVariableNames: 'length'!
+
+
+!Number methodsFor: '*Distance-Solution' stamp: 'NB 5/25/2017 18:17:55'!
+Centimetros
+	^ Longitude withLength: self *10! !
+
+!Number methodsFor: '*Distance-Solution' stamp: 'NB 5/25/2017 10:32:01'!
+Kilometros
+	^ Longitude withLength: (self * 1000000)! !
+
+!Number methodsFor: '*Distance-Solution' stamp: 'NB 5/25/2017 18:17:38'!
+Metros
+	^Longitude withLength: self * 1000! !
 
 !DistancesTests methodsFor: 'as yet unclassified' stamp: 'NB 5/25/2017 09:32:47'!
 setUp
@@ -204,23 +244,6 @@ test35GenerateARangeFromOneMeterToTwoMetersbyTenCentimetersAndDoSomething
 	distanceFactory oneMeter to: (3 Metros) by: (10 Centimetros) do: [:aNumber| range add: aNumber ].
 	self assert: range size = 21! !
 
-
-!classDefinition: #DistanceFactory category: #'Distance-Solution'!
-Object subclass: #DistanceFactory
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Distance-Solution'!
-
-!DistanceFactory methodsFor: 'as yet unclassified' stamp: 'NB 5/25/2017 09:24:09'!
-oneCentimeter
-		^1 Centimetros! !
-
-!DistanceFactory methodsFor: 'as yet unclassified' stamp: 'NB 5/25/2017 09:22:50'!
-oneMinusMeter
-		^-1 Metros! !
-
-
 !DistanceFactory methodsFor: 'accessing' stamp: 'NB 5/25/2017 10:08:50'!
 fourMeters
 	^ 4 Metros! !
@@ -228,6 +251,10 @@ fourMeters
 !DistanceFactory methodsFor: 'accessing' stamp: 'NB 5/25/2017 10:24:10'!
 halfMeter
 	^(1/2) Metros ! !
+
+!DistanceFactory methodsFor: 'as yet unclassified' stamp: 'NB 5/25/2017 09:24:09'!
+oneCentimeter
+		^1 Centimetros! !
 
 !DistanceFactory methodsFor: 'accessing' stamp: 'NB 5/25/2017 09:35:09'!
 oneHundredCentimeters
@@ -240,6 +267,10 @@ oneKilometer
 !DistanceFactory methodsFor: 'accessing' stamp: 'NB 5/25/2017 09:37:29'!
 oneMeter
 	^1 Metros! !
+
+!DistanceFactory methodsFor: 'as yet unclassified' stamp: 'NB 5/25/2017 09:22:50'!
+oneMinusMeter
+		^-1 Metros! !
 
 !DistanceFactory methodsFor: 'accessing' stamp: 'NB 5/25/2017 10:14:24'!
 oneThousandMillimeters
@@ -261,18 +292,46 @@ twoMeters
 zeroMeters
 	^0 Metros ! !
 
-
-!classDefinition: #Longitude category: #'Distance-Solution'!
-Object subclass: #Longitude
-	instanceVariableNames: 'length unit'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Distance-Solution'!
+!Longitude methodsFor: 'arithmethics' stamp: 'NB 5/25/2017 10:18:29'!
+* aNumber
+	^ Longitude withLength: (aNumber * self length )! !
+
+!Longitude methodsFor: 'arithmethics' stamp: 'NB 5/25/2017 09:52:38'!
++ aLongitude 
+	^Longitude withLength: (self length + (aLongitude  length)) ! !
+
+!Longitude methodsFor: 'arithmethics' stamp: 'NB 5/25/2017 10:11:40'!
+- aLongitude 
+	^ Longitude withLength: (self length - aLongitude length )! !
+
+!Longitude methodsFor: 'arithmethics' stamp: 'NB 5/25/2017 10:26:15'!
+/ aNumber 
+	^ Longitude withLength: (self length / aNumber )! !
+
+!Longitude methodsFor: 'comparing' stamp: 'NB 5/25/2017 10:41:48'!
+< aLongitude 
+	^(self length > aLongitude length ) not! !
+
+!Longitude methodsFor: 'comparing' stamp: 'NB 5/25/2017 10:45:36'!
+<= aLongitude 
+	^self = aLongitude or: [self < aLongitude ]! !
 
 !Longitude methodsFor: 'as yet unclassified' stamp: 'NB 5/24/2017 08:14:12'!
 = anotherLongitude
 	^self length = anotherLongitude length ! !
 
+!Longitude methodsFor: 'comparing' stamp: 'NB 5/25/2017 10:32:46'!
+> aLongitude 
+	^self length  > aLongitude length ! !
+
+!Longitude methodsFor: 'comparing' stamp: 'NB 5/25/2017 10:37:55'!
+>= aLongitude 
+	^self > aLongitude or: [self = aLongitude ]
+	! !
+
+!Longitude methodsFor: 'arithmethics' stamp: 'NB 5/25/2017 10:22:16'!
+adaptToNumber: aNumber andSend: aSymbol 
+	^ Longitude withLength: (self length * aNumber )! !
 
 !Longitude methodsFor: 'accessing' stamp: 'NB 5/25/2017 18:18:32'!
 length
@@ -297,51 +356,6 @@ to: aLongitude by: aStep do: aBlockClosure
 !Longitude methodsFor: 'accessing' stamp: 'NB 5/25/2017 18:09:21'!
 unit: anUnit
 	unit := anUnit ! !
-
-
-!Longitude methodsFor: 'arithmethics' stamp: 'NB 5/25/2017 10:18:29'!
-* aNumber
-	^ Longitude withLength: (aNumber * self length )! !
-
-!Longitude methodsFor: 'arithmethics' stamp: 'NB 5/25/2017 09:52:38'!
-+ aLongitude 
-	^Longitude withLength: (self length + (aLongitude  length)) ! !
-
-!Longitude methodsFor: 'arithmethics' stamp: 'NB 5/25/2017 10:11:40'!
-- aLongitude 
-	^ Longitude withLength: (self length - aLongitude length )! !
-
-!Longitude methodsFor: 'arithmethics' stamp: 'NB 5/25/2017 10:26:15'!
-/ aNumber 
-	^ Longitude withLength: (self length / aNumber )! !
-
-!Longitude methodsFor: 'arithmethics' stamp: 'NB 5/25/2017 10:22:16'!
-adaptToNumber: aNumber andSend: aSymbol 
-	^ Longitude withLength: (self length * aNumber )! !
-
-
-!Longitude methodsFor: 'comparing' stamp: 'NB 5/25/2017 10:41:48'!
-< aLongitude 
-	^(self length > aLongitude length ) not! !
-
-!Longitude methodsFor: 'comparing' stamp: 'NB 5/25/2017 10:45:36'!
-<= aLongitude 
-	^self = aLongitude or: [self < aLongitude ]! !
-
-!Longitude methodsFor: 'comparing' stamp: 'NB 5/25/2017 10:32:46'!
-> aLongitude 
-	^self length  > aLongitude length ! !
-
-!Longitude methodsFor: 'comparing' stamp: 'NB 5/25/2017 10:37:55'!
->= aLongitude 
-	^self > aLongitude or: [self = aLongitude ]
-	! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'Longitude class' category: #'Distance-Solution'!
-Longitude class
-	instanceVariableNames: 'length'!
 
 !Longitude class methodsFor: 'initialization' stamp: 'NB 5/25/2017 18:16:20'!
 withLength: aLength
