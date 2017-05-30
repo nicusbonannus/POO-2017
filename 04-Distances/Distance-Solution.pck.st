@@ -1,4 +1,4 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3076] on 30 May 2017 at 7:00:38 pm'!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3076] on 30 May 2017 at 7:02:45 pm'!
 'Description Please enter a description for this package'!
 !provides: 'Distance-Solution' 1 0!
 !requires: 'Cuis-Base' 50 3076 nil!
